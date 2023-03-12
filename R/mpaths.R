@@ -18,7 +18,7 @@ mpaths <- function(i,j){
   }
 
   if (i != floor(i) | j != floor(j)){
-    rlang::abort(message = "i and j must be natural numbers")
+    rlang::abort(message = "i and j must be non-negative integers numbers")
   }
 
   factorial(i+j)/(factorial(i)*factorial(j))
