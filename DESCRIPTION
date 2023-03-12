@@ -12,3 +12,6 @@ Imports:
     rlang
 URL: https://github.com/mncube/streets
 BugReports: https://github.com/mncube/streets/issues
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
