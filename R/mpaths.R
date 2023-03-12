@@ -21,5 +21,7 @@ mpaths <- function(i,j){
     rlang::abort(message = "i and j must be non-negative integers")
   }
 
-  factorial(i+j)/(factorial(i)*factorial(j))
+  #factorial(i+j)/(factorial(i)*factorial(j))
+  #Note: Use choose instead of factorial to avoid NaNs
+  choose(i + j, j)
 }
