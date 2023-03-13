@@ -4,12 +4,11 @@
 \alias{mpaths}
 \title{Manhattan Paths}
 \usage{
-mpaths(i, j)
+mpaths(destination = c(i, j))
 }
 \arguments{
-\item{i}{horizontal coordinate of the 2D lattice}
-
-\item{j}{vertical coordinate of the 2D lattice}
+\item{destination}{A vector defining the destination coordinates in terms of
+a horizontal coordinate i and a vertical coordinate j}
 }
 \value{
 A number
@@ -19,5 +18,5 @@ The mpaths function computes the number of paths with equal Manhattan Distance
 starting at the origin (0,0) and ending at (i, j).
 }
 \examples{
-mpaths(i = 2, j = 2)
+mpaths(c(2,2))
 }

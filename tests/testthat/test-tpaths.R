@@ -1,6 +1,6 @@
 test_that("tpaths gives same answer as mpaths when ti = i and tj = j", {
   expect_equal(tpaths(destination = c(4,4), target = c(4,4)),
-               mpaths(i = 4, j = 4))
+               mpaths(c(4,4)))
 })
 
 

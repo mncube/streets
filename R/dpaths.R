@@ -37,5 +37,5 @@ dpaths <- function(destination = c(i,j), detour = c(di, dj)){
   }
 
   #Compute detour paths
-  mpaths(i,j) - tpaths(destination = destination, target = detour)
+  mpaths(destination = destination) - tpaths(destination = destination, target = detour)
 }

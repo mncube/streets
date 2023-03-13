@@ -38,6 +38,6 @@ tpaths <- function(destination = c(i,j), target = c(ti, tj)){
   }
 
   #Compute target paths
-  mpaths(ti, tj)*mpaths(i - ti, j - tj)
+  mpaths(destination = target)*mpaths(c(i - ti, j - tj))
 
 }
