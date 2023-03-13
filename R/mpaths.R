@@ -3,8 +3,8 @@
 #' The mpaths function computes the number of paths with equal Manhattan Distance
 #' starting at the origin (0,0) and ending at (i, j).
 #'
-#' @param i number of rows in the 2D lattice
-#' @param j number of columns in the 2D lattice
+#' @param i horizontal coordinate of the 2D lattice
+#' @param j vertical coordinate of the 2D lattice
 #'
 #' @return A number
 #' @export

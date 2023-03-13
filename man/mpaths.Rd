@@ -7,9 +7,9 @@
 mpaths(i, j)
 }
 \arguments{
-\item{i}{number of rows in the 2D lattice}
+\item{i}{horizontal coordinate of the 2D lattice}
 
-\item{j}{number of columns in the 2D lattice}
+\item{j}{vertical coordinate of the 2D lattice}
 }
 \value{
 A number
