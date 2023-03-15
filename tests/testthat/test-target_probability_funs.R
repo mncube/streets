@@ -1,12 +1,3 @@
-test_that("ptpaths gives 1 when the target location equals the destination and
-          when the target location is at the origin", {
-
-            expect_equal(ptpaths(destination = c(5,5), target = c(5,5)), 1)
-            expect_equal(ptpaths(destination = c(5,5), target = c(0,0)), 1)
-
-})
-
-
 test_that("ptpaths returns correct values and behaves as expected", {
 
   # Test 1: Test with target at origin (0, 0)
