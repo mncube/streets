@@ -20,3 +20,25 @@ test_that("ptpaths returns correct values and behaves as expected", {
   # Test 6: Test with invalid target (greater than destination)
   expect_error(ptpaths(destination = c(2, 2), target = c(3, 3)), "Target coordinate must be on grid")
 })
+
+
+test_that("dtpaths returns correct values and behaves as expected", {
+  expect_equal(sum(dtpaths(c(2,2), c(0,0)),
+                   dtpaths(c(2,2), c(0,1)),
+                   dtpaths(c(2,2), c(1,0)),
+                   dtpaths(c(2,2), c(1,1)),
+                   dtpaths(c(2,2), c(1,2)),
+                   dtpaths(c(2,2), c(2,1)),
+                   dtpaths(c(2,2), c(2,2)),
+                   dtpaths(c(2,2), c(0,2)),
+                   dtpaths(c(2,2), c(2,0))), 1)
+
+  cumpaths <- 0
+  for (x in 0:10){
+    for (y in 0:10){
+      cumpaths <- cumpaths + dtpaths(c(10,10), c(x,y))
+    }
+  }
+  expect_equal(cumpaths, 1)
+})
+
