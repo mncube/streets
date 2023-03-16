@@ -98,13 +98,16 @@ dtpaths <- function(destination = c(i, j),
 #' @param destination A vector defining the destination coordinates in terms of
 #' a horizontal coordinate i and a vertical coordinate j.
 #' @param p a probability
+#' @param wise when generating quantiles, colwise uses j (i.e., columns) for the
+#' inner loop and i for the outer loop while rowwise uses i for the inner loop
+#' and j for the outer loop.
 #'
 #' @return coordinates for a target location
 #' @export
 #'
 #' @examples
 #' qtpaths(c(5,5), .5)
-qtpaths <- function(destination = c(i, j), p) {
+qtpaths <- function(destination = c(i, j), p, wise = "colwise") {
   # Get values
   i <- destination[[1]]
   j <- destination[[2]]
@@ -114,19 +117,39 @@ qtpaths <- function(destination = c(i, j), p) {
     rlang::abort(message = "p must be between 0 and 1")
   }
 
+
   # Iterate through all possible target coordinates
-  for (ti in 0:i) {
+
+  # Check if wise is a valid value
+  if (!(wise == "colwise" | wise == "rowwise")){
+    rlang::abort(message ="wise must be set to colwise or rowwise")
+  }
+
+  if (wise == "colwise"){
+    for (ti in 0:i) {
+      for (tj in 0:j) {
+        # Check if the cumulative probability at (ti, tj) is equal to or just greater than p
+        if (ptpaths(destination = destination, target = c(ti, tj)) >= p) {
+          # Return the target coordinate (ti, tj)
+          return(c(ti,tj))
+        }
+      }
+    }
+  } else {
     for (tj in 0:j) {
-      # Check if the cumulative probability at (ti, tj) is equal to or just greater than p
-      if (ptpaths(destination = destination, target = c(ti, tj)) >= p) {
-        # Return the target coordinate (ti, tj)
-        return(c(ti, tj))
+      for (ti in 0:i) {
+        # Check if the cumulative probability at (ti, tj) is equal to or just greater than p
+        if (ptpaths(destination = destination, target = c(ti, tj)) >= p) {
+          # Return the target coordinate (ti, tj)
+          return(c(ti,tj))
+        }
       }
     }
   }
 
   # In case no suitable target coordinate is found (should not happen with valid inputs)
-  rlang::abort(message = "No suitable target coordinate found")
+    rlang::abort(message = "No suitable target coordinate found")
+
 }
 
 
