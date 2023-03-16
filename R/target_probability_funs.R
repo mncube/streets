@@ -87,3 +87,44 @@ dtpaths <- function(destination = c(i, j),
 
 
 }
+
+
+#' Target Location Quantile Function
+#'
+#' A quantile function which takes a probability p and a destination (i, j) as
+#' inputs and returns the coordinates for the target location (ti, tj) where the
+#' cumulative probability is equal to or just greater than p.
+#'
+#' @param destination A vector defining the destination coordinates in terms of
+#' a horizontal coordinate i and a vertical coordinate j.
+#' @param p a probability
+#'
+#' @return coordinates for a target location
+#' @export
+#'
+#' @examples
+#' qtpaths(c(5,5), .5)
+qtpaths <- function(destination = c(i, j), p) {
+  # Get values
+  i <- destination[[1]]
+  j <- destination[[2]]
+
+  # Check if p is within the valid range [0, 1]
+  if (p < 0 || p > 1) {
+    rlang::abort(message = "p must be between 0 and 1")
+  }
+
+  # Iterate through all possible target coordinates
+  for (ti in 0:i) {
+    for (tj in 0:j) {
+      # Check if the cumulative probability at (ti, tj) is equal to or just greater than p
+      if (ptpaths(destination = destination, target = c(ti, tj)) >= p) {
+        # Return the target coordinate (ti, tj)
+        return(c(ti, tj))
+      }
+    }
+  }
+
+  # In case no suitable target coordinate is found (should not happen with valid inputs)
+  rlang::abort(message = "No suitable target coordinate found")
+}

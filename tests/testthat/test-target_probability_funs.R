@@ -35,3 +35,26 @@ test_that("dtpaths returns correct values and behaves as expected", {
   expect_equal(cumpaths, 1)
 })
 
+
+test_that("qtpaths returns correct values and behaves as expected", {
+  destination <- c(3, 3)
+
+  # Test 1: Check that qtpaths returns the origin (0, 0) for p = 0
+  expect_equal(qtpaths(destination, p = 0), c(0, 0))
+
+  # Test 2: Check that qtpaths returns the destination (i, j) for p = 1
+  expect_equal(qtpaths(destination, p = 1), destination)
+
+  # Test 3: Test qtpaths against known cumulative probabilities
+  target1 <- qtpaths(destination, p = 0.25)
+  target2 <- qtpaths(destination, p = 0.5)
+  target3 <- qtpaths(destination, p = 0.75)
+  expect_true(ptpaths(destination, target1) >= 0.25)
+  expect_true(ptpaths(destination, target2) >= 0.5)
+  expect_true(ptpaths(destination, target3) >= 0.75)
+
+  # Test 4: Check that qtpaths raises an error for p < 0 or p > 1
+  expect_error(qtpaths(destination, p = -0.1), "p must be between 0 and 1")
+  expect_error(qtpaths(destination, p = 1.1), "p must be between 0 and 1")
+})
+
