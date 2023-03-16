@@ -58,3 +58,21 @@ test_that("qtpaths returns correct values and behaves as expected", {
   expect_error(qtpaths(destination, p = 1.1), "p must be between 0 and 1")
 })
 
+
+test_that("rtpaths returns correct values and behaves as expected", {
+  # Test 1: Generate a single random target coordinate
+  random_target_1 <- rtpaths(c(3, 3), 1)
+  expect_equal(dim(random_target_1), c(1, 2)) # Check if dimensions are correct
+
+  # Test 2: Generate multiple random target coordinates
+  random_targets_5 <- rtpaths(c(3, 3), 5)
+  expect_equal(dim(random_targets_5), c(5, 2)) # Check if dimensions are correct
+
+  # Test 3: Generate random target coordinates for a larger grid
+  random_targets_large_grid <- rtpaths(c(10, 10), 5)
+  expect_equal(dim(random_targets_large_grid), c(5, 2)) # Check if dimensions are correct
+
+  # Test 4: Generate random target coordinates with different grid dimensions
+  random_targets_diff_dim <- rtpaths(c(5, 8), 5)
+  expect_equal(dim(random_targets_diff_dim), c(5, 2)) # Check if dimensions are correct
+})
