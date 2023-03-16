@@ -1,24 +1,17 @@
 test_that("ptpaths returns correct values and behaves as expected", {
+  # Test 1: When the target is the origin (0, 0)
+  expect_equal(ptpaths(c(3, 3), c(0, 0)), dtpaths(c(3, 3), c(0, 0)))
 
-  # Test 1: Test with target at origin (0, 0)
-  expect_equal(ptpaths(destination = c(4, 4), target = c(0, 0)), 1)
+  # Test 2: When the target is the destination (i, j)
+  expect_equal(ptpaths(c(3, 3), c(3, 3)), 1)
 
-  # Test 2: Test with target at destination
-  expect_equal(ptpaths(destination = c(4, 4), target = c(4, 4)), 1)
+  # Test 3: Cumulative probability function is symmetric
+  expect_equal(ptpaths(c(3, 3), c(2, 1)), ptpaths(c(3, 3), c(1, 2)))
+  expect_equal(ptpaths(c(10, 10), c(3, 8)), ptpaths(c(10, 10), c(8, 3)))
 
-  # Test 3: Test with a symmetric case
-  expect_equal(ptpaths(destination = c(10,10), target = c(4,8)),
-               ptpaths(destination = c(10,10), target = c(8,4)))
-
-  # Test 4: Test with another symmetric case
-  expect_equal(ptpaths(destination = c(20, 20), target = c(19,19)),
-               ptpaths(destination = c(20, 20), target = c(1,1)))
-
-  # Test 5: Test with q = 0
-  expect_equal(ptpaths(destination = c(0, 0), target = c(0, 0)), 1)
-
-  # Test 6: Test with invalid target (greater than destination)
-  expect_error(ptpaths(destination = c(2, 2), target = c(3, 3)), "Target coordinate must be on grid")
+  # Test 4: When the target coordinate is off the grid
+  expect_error(ptpaths(c(3, 3), c(4, 3)), "Target coordinate must be on grid")
+  expect_error(ptpaths(c(3, 3), c(3, 4)), "Target coordinate must be on grid")
 })
 
 

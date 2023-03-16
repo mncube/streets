@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_probability_funs.R
 \name{ptpaths}
 \alias{ptpaths}
-\title{Target Location Probability Mass Function}
+\title{Target Location Cumulative Distribution Function}
 \usage{
 ptpaths(destination = c(i, j), target = c(ti, tj))
 }
@@ -17,10 +17,7 @@ horizontal coordinate ti and a vertical coordinate tj.}
 A real number in the closed interval 0 to 1
 }
 \description{
-A probability mass function where the number of Target Paths (with a target
-location defined with the targer parameter) is the event of interest and the
-number of Manhattan Paths (on a grid defined with the destination parameter)
-is the sample space.
+A cumulative distribution function for the dtpaths probability mass function
 }
 \examples{
 ptpaths(destination = c(5,5), target = c(1,1))

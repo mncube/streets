@@ -1,9 +1,6 @@
-#' Target Location Probability Mass Function
+#' Target Location Cumulative Distribution Function
 #'
-#' A probability mass function where the number of Target Paths (with a target
-#' location defined with the targer parameter) is the event of interest and the
-#' number of Manhattan Paths (on a grid defined with the destination parameter)
-#' is the sample space.
+#' A cumulative distribution function for the dtpaths probability mass function
 #'
 #' @param destination A vector defining the destination coordinates in terms of
 #' a horizontal coordinate i and a vertical coordinate j.
@@ -15,17 +12,39 @@
 #'
 #' @examples
 #' ptpaths(destination = c(5,5), target = c(1,1))
-ptpaths <- function(destination = c(i, j),
-                   target = c(ti, tj)){
-  #Get values
+ptpaths <- function(destination = c(i, j), target = c(ti, tj)) {
+  # Get values
   i <- destination[[1]]
   j <- destination[[2]]
   ti <- target[[1]]
   tj <- target[[2]]
 
-  tpaths(destination = destination,
-         target = target)/mpaths(destination = destination)
+  # Initialize the cumulative probability
+  cumulative_probability <- 0
+
+  # Iterate through all possible target coordinates up to and including (ti, tj)
+  for (x in 0:ti) {
+    for (y in 0:tj) {
+      # Add the probability of each target coordinate to the cumulative probability
+      cumulative_probability <- cumulative_probability + dtpaths(destination = destination, target = c(x, y))
+    }
+  }
+
+  # Return the cumulative probability
+  return(cumulative_probability)
 }
+
+# ptpaths <- function(destination = c(i, j),
+#                    target = c(ti, tj)){
+#   #Get values
+#   i <- destination[[1]]
+#   j <- destination[[2]]
+#   ti <- target[[1]]
+#   tj <- target[[2]]
+#
+#   tpaths(destination = destination,
+#          target = target)/mpaths(destination = destination)
+# }
 
 
 #' Target Location Probability Mass Function
