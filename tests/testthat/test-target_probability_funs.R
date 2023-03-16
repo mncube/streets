@@ -16,6 +16,8 @@ test_that("ptpaths returns correct values and behaves as expected", {
 
 
 test_that("dtpaths returns correct values and behaves as expected", {
+
+  #Test 1 dtpaths sums to 1 across all points on grid
   expect_equal(sum(dtpaths(c(2,2), c(0,0)),
                    dtpaths(c(2,2), c(0,1)),
                    dtpaths(c(2,2), c(1,0)),
@@ -26,6 +28,7 @@ test_that("dtpaths returns correct values and behaves as expected", {
                    dtpaths(c(2,2), c(0,2)),
                    dtpaths(c(2,2), c(2,0))), 1)
 
+  #Test 2 dtpaths sums to 1 across all points on grid
   cumpaths <- 0
   for (x in 0:10){
     for (y in 0:10){
