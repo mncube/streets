@@ -149,21 +149,44 @@ rtpaths <- function(destination = c(i, j), n = 1) {
   i <- destination[[1]]
   j <- destination[[2]]
 
-  # Initialize an empty matrix to store the generated target coordinates
-  random_targets <- matrix(0, nrow = n, ncol = 2)
+  # Create an array of all possible target coordinates
+  all_targets <- expand.grid(ti = 0:i, tj = 0:j)
 
-  # Generate n random target coordinates
-  for (k in 1:n) {
-    # Generate a random probability value between 0 and 1
-    p <- stats::runif(1)
+  # Compute the probabilities for each target coordinate
+  all_probs <- apply(all_targets, 1, function(x) dtpaths(destination, target = x))
 
-    # Use the qtpaths function to get the corresponding target coordinate for the random probability value
-    random_target <- qtpaths(destination = destination, p = p)
+  # Normalize the probabilities (to account for potential floating-point errors)
+  all_probs <- all_probs / sum(all_probs)
 
-    # Add the generated target coordinate to the random_targets matrix
-    random_targets[k, ] <- random_target
-  }
+  # Sample target coordinates based on their probabilities
+  sampled_indices <- sample(1:(length(all_probs)), size = n, replace = TRUE, prob = all_probs)
+  sampled_targets <- all_targets[sampled_indices, ]
 
-  # Return the random_targets matrix
-  return(random_targets)
+  # Return the matrix of random target coordinates
+  return(sampled_targets)
 }
+
+
+# rtpaths <- function(destination = c(i, j), n = 1) {
+#   # Get values
+#   i <- destination[[1]]
+#   j <- destination[[2]]
+#
+#   # Initialize an empty matrix to store the generated target coordinates
+#   random_targets <- matrix(0, nrow = n, ncol = 2)
+#
+#   # Generate n random target coordinates
+#   for (k in 1:n) {
+#     # Generate a random probability value between 0 and 1
+#     p <- stats::runif(1)
+#
+#     # Use the qtpaths function to get the corresponding target coordinate for the random probability value
+#     random_target <- qtpaths(destination = destination, p = p)
+#
+#     # Add the generated target coordinate to the random_targets matrix
+#     random_targets[k, ] <- random_target
+#   }
+#
+#   # Return the random_targets matrix
+#   return(random_targets)
+# }
