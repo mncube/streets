@@ -98,8 +98,8 @@ dtpaths <- function(destination = c(i, j),
 #' @param destination A vector defining the destination coordinates in terms of
 #' a horizontal coordinate i and a vertical coordinate j.
 #' @param p a probability
-#' @param wise when generating quantiles, colwise uses j (i.e., columns) for the
-#' inner loop and i for the outer loop while rowwise uses i for the inner loop
+#' @param wise when generating quantiles, col uses j (i.e., columns) for the
+#' inner loop and i for the outer loop while row uses i for the inner loop
 #' and j for the outer loop.
 #'
 #' @return coordinates for a target location
@@ -107,7 +107,7 @@ dtpaths <- function(destination = c(i, j),
 #'
 #' @examples
 #' qtpaths(c(5,5), .5)
-qtpaths <- function(destination = c(i, j), p, wise = "colwise") {
+qtpaths <- function(destination = c(i, j), p, wise = "col") {
   # Get values
   i <- destination[[1]]
   j <- destination[[2]]
@@ -121,11 +121,11 @@ qtpaths <- function(destination = c(i, j), p, wise = "colwise") {
   # Iterate through all possible target coordinates
 
   # Check if wise is a valid value
-  if (!(wise == "colwise" | wise == "rowwise")){
-    rlang::abort(message ="wise must be set to colwise or rowwise")
+  if (!(wise == "col" | wise == "row")){
+    rlang::abort(message ="wise must be set to 'col' or 'row'")
   }
 
-  if (wise == "colwise"){
+  if (wise == "col"){
     for (ti in 0:i) {
       for (tj in 0:j) {
         # Check if the cumulative probability at (ti, tj) is equal to or just greater than p

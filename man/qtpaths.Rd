@@ -4,7 +4,7 @@
 \alias{qtpaths}
 \title{Target Paths Quantile Function}
 \usage{
-qtpaths(destination = c(i, j), p, wise = "colwise")
+qtpaths(destination = c(i, j), p, wise = "col")
 }
 \arguments{
 \item{destination}{A vector defining the destination coordinates in terms of
@@ -12,8 +12,8 @@ a horizontal coordinate i and a vertical coordinate j.}
 
 \item{p}{a probability}
 
-\item{wise}{when generating quantiles, colwise uses j (i.e., columns) for the
-inner loop and i for the outer loop while rowwise uses i for the inner loop
+\item{wise}{when generating quantiles, col uses j (i.e., columns) for the
+inner loop and i for the outer loop while row uses i for the inner loop
 and j for the outer loop.}
 }
 \value{
