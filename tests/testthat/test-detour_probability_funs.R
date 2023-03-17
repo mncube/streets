@@ -71,3 +71,20 @@ test_that("qdpaths returns correct values and behaves as expected", {
   expect_error(qdpaths(destination, p = 1.1), "p must be between 0 and 1")
 })
 
+test_that("rdpaths returns correct values and behaves as expected", {
+  # Test 1: Generate a single random detour coordinate
+  random_detour_1 <- rdpaths(c(3, 3), 1)
+  expect_equal(dim(random_detour_1), c(1, 2)) # Check if dimensions are correct
+
+  # Test 2: Generate multiple random detour coordinates
+  random_detours_5 <- rdpaths(c(3, 3), 5)
+  expect_equal(dim(random_detours_5), c(5, 2)) # Check if dimensions are correct
+
+  # Test 3: Generate random detour coordinates for a larger grid
+  random_detours_large_grid <- rdpaths(c(10, 10), 5)
+  expect_equal(dim(random_detours_large_grid), c(5, 2)) # Check if dimensions are correct
+
+  # Test 4: Generate random detour coordinates with different grid dimensions
+  random_detours_diff_dim <- rdpaths(c(5, 8), 5)
+  expect_equal(dim(random_detours_diff_dim), c(5, 2)) # Check if dimensions are correct
+})

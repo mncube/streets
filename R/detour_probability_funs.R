@@ -140,3 +140,40 @@ qdpaths <- function(destination = c(i, j), p, wise = "col") {
   rlang::abort(message = "No suitable detour coordinate found")
 
 }
+
+
+#' Detour Paths Random Variable Function
+#'
+#' A random variable function that generates random detour coordinates from the
+#' distribution defined by the ddpaths probability mass function.
+#'
+#' @param destination A vector defining the destination coordinates in terms of
+#' a horizontal coordinate i and a vertical coordinate j.
+#' @param n The number of detour coordinates to generate
+#'
+#' @return A matrix of detour coordinates
+#' @export
+#'
+#' @examples
+#' rdpaths(c(10,10), 2)
+rdpaths <- function(destination = c(i, j), n = 1) {
+  # Get values
+  i <- destination[[1]]
+  j <- destination[[2]]
+
+  # Create an array of all possible detour coordinates
+  all_detours <- expand.grid(di = 0:i, dj = 0:j)
+
+  # Compute the probabilities for each detour coordinate
+  all_probs <- apply(all_detours, 1, function(x) ddpaths(destination, detour = x))
+
+  # Normalize the probabilities (to account for potential floating-point errors)
+  all_probs <- all_probs / sum(all_probs)
+
+  # Sample detour coordinates based on their probabilities
+  sampled_indices <- sample(1:(length(all_probs)), size = n, replace = TRUE, prob = all_probs)
+  sampled_detours<- all_detours[sampled_indices, ]
+
+  # Return the matrix of random detour coordinates
+  return(sampled_detours)
+}
