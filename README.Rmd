@@ -123,6 +123,8 @@ The next example shows normalization for dtpaths
       probs_tpaths <- probs_tpaths + dtpaths(c(10,10), c(x,y))
     }
   }
+
+print(probs_tpaths)
 ```
 
 

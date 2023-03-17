@@ -119,6 +119,9 @@ The next example shows normalization for dtpaths
       probs_tpaths <- probs_tpaths + dtpaths(c(10,10), c(x,y))
     }
   }
+
+print(probs_tpaths)
+#> [1] 1
 ```
 
 The ptpaths function is a cumulative distribution function for the
@@ -152,8 +155,8 @@ probability mass function.
 
 ``` r
 rtpaths(destination = c(10,10), n = 3)
-#>     ti tj
-#> 121 10 10
-#> 52   7  4
-#> 70   3  6
+#>    ti tj
+#> 75  8  6
+#> 13  1  1
+#> 48  3  4
 ```
