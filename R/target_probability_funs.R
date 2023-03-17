@@ -1,4 +1,4 @@
-#' Target Location Cumulative Distribution Function
+#' Target Paths Cumulative Distribution Function
 #'
 #' A cumulative distribution function for the dtpaths probability mass function
 #'
@@ -47,7 +47,7 @@ ptpaths <- function(destination = c(i, j), target = c(ti, tj)) {
 # }
 
 
-#' Target Location Probability Mass Function
+#' Target Paths Probability Mass Function
 #'
 #' A probability mass function where the number of target paths through the
 #' target location specified in the target parameter is the event of interest and
@@ -89,7 +89,7 @@ dtpaths <- function(destination = c(i, j),
 }
 
 
-#' Target Location Quantile Function
+#' Target Paths Quantile Function
 #'
 #' A quantile function which takes a probability p and a destination (i, j) as
 #' inputs and returns the coordinates for the target location (ti, tj) where the
@@ -153,7 +153,7 @@ qtpaths <- function(destination = c(i, j), p, wise = "colwise") {
 }
 
 
-#' Target Location Random Variable Function
+#' Target Paths Random Variable Function
 #'
 #' A random variable function that generates random target coordinates from the
 #' distribution defined by the dtpaths probability mass function.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/detour_probability_funs.R
 \name{ddpaths}
 \alias{ddpaths}
-\title{Detour Location Probability Mass Function}
+\title{Detour Paths Probability Mass Function}
 \usage{
 ddpaths(destination = c(i, j), detour = c(di, dj))
 }

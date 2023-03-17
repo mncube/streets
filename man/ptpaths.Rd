@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_probability_funs.R
 \name{ptpaths}
 \alias{ptpaths}
-\title{Target Location Cumulative Distribution Function}
+\title{Target Paths Cumulative Distribution Function}
 \usage{
 ptpaths(destination = c(i, j), target = c(ti, tj))
 }

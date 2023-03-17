@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_probability_funs.R
 \name{dtpaths}
 \alias{dtpaths}
-\title{Target Location Probability Mass Function}
+\title{Target Paths Probability Mass Function}
 \usage{
 dtpaths(destination = c(i, j), target = c(ti, tj))
 }

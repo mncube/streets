@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_probability_funs.R
 \name{rtpaths}
 \alias{rtpaths}
-\title{Target Location Random Variable Function}
+\title{Target Paths Random Variable Function}
 \usage{
 rtpaths(destination = c(i, j), n = 1)
 }

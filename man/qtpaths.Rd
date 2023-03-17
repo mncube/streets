@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_probability_funs.R
 \name{qtpaths}
 \alias{qtpaths}
-\title{Target Location Quantile Function}
+\title{Target Paths Quantile Function}
 \usage{
 qtpaths(destination = c(i, j), p, wise = "colwise")
 }
