@@ -73,3 +73,70 @@ pdpaths <- function(destination = c(i, j), detour = c(di, dj)) {
   # Return the cumulative probability
   return(cumulative_probability)
 }
+
+
+#' Detour Paths Quantile Function
+#'
+#' A quantile function which takes a probability p and a destination (i, j) as
+#' inputs and returns the coordinates for the detour location (di, dj) where the
+#' cumulative probability is equal to or just greater than p.
+#'
+#' @param destination A vector defining the destination coordinates in terms of
+#' a horizontal coordinate i and a vertical coordinate j.
+#' @param p a probability
+#' @param wise when generating quantiles, col uses j (i.e., columns) for the
+#' inner loop and i for the outer loop while row uses i for the inner loop
+#' and j for the outer loop.
+#'
+#' @return coordinates for a detour location
+#' @export
+#'
+#' @examples
+#' qdpaths(c(5,5), .5)
+qdpaths <- function(destination = c(i, j), p, wise = "col") {
+  # Get values
+  i <- destination[[1]]
+  j <- destination[[2]]
+
+  # Check if p is within the valid range [0, 1]
+  if (p < 0 || p > 1) {
+    rlang::abort(message = "p must be between 0 and 1")
+  }
+
+
+  # Iterate through all possible detour coordinates
+
+  # Check if wise is a valid value
+  if (!(wise == "col" | wise == "row")){
+    rlang::abort(message ="wise must be set to 'col' or 'row'")
+  }
+
+  if (wise == "col"){
+    for (di in 0:i) {
+      for (dj in 0:j) {
+        # Check if the cumulative probability at (di, dj) is equal to or just
+        #greater than p
+        if (pdpaths(destination = destination, detour = c(di, dj)) >= p) {
+          # Return the detour coordinate (di, dj)
+          return(c(di,dj))
+        }
+      }
+    }
+  } else {
+    for (dj in 0:j) {
+      for (di in 0:i) {
+        # Check if the cumulative probability at (di, dj) is equal to or just
+        #greater than p
+        if (pdpaths(destination = destination, detour = c(di, dj)) >= p) {
+          # Return the detour coordinate (di, dj)
+          return(c(di,dj))
+        }
+      }
+    }
+  }
+
+  # In case no suitable detour coordinate is found (should not happen with valid
+  #inputs)
+  rlang::abort(message = "No suitable detour coordinate found")
+
+}

@@ -47,3 +47,27 @@ test_that("pdpaths returns correct values and behaves as expected", {
   expect_error(pdpaths(c(3, 3), c(4, 3)), "Detour coordinate must be on grid.")
   expect_error(pdpaths(c(3, 3), c(3, 4)), "Detour coordinate must be on grid.")
 })
+
+
+test_that("qdpaths returns correct values and behaves as expected", {
+  destination <- c(3, 3)
+
+  # Test 1: Check that qdpaths returns the origin (0, 0) for p = 0
+  expect_equal(qdpaths(destination, p = 0), c(0, 0))
+
+  # Test 2: Check that qdpaths returns the destination (i, j) for p = 1
+  expect_equal(qdpaths(destination, p = 1), destination)
+
+  # Test 3: Test qdpaths against known cumulative probabilities
+  detour1 <- qdpaths(destination, p = 0.25)
+  detour2 <- qdpaths(destination, p = 0.5)
+  detour3 <- qdpaths(destination, p = 0.75)
+  expect_true(pdpaths(destination, detour1) >= 0.25)
+  expect_true(pdpaths(destination, detour2) >= 0.5)
+  expect_true(pdpaths(destination, detour3) >= 0.75)
+
+  # Test 4: Check that qdpaths raises an error for p < 0 or p > 1
+  expect_error(qdpaths(destination, p = -0.1), "p must be between 0 and 1")
+  expect_error(qdpaths(destination, p = 1.1), "p must be between 0 and 1")
+})
+
