@@ -155,8 +155,50 @@ probability mass function.
 
 ``` r
 rtpaths(destination = c(10,10), n = 3)
-#>    ti tj
-#> 75  8  6
-#> 13  1  1
-#> 48  3  4
+#>     ti tj
+#> 118  7 10
+#> 35   1  3
+#> 51   6  4
+```
+
+## Detour Paths
+
+Detour Paths are similar to Target Paths but they force the paths NOT to
+pass through a detour location. In the example below, two detour paths
+on a grid with destination (4,4) both DO NOT pass through the detour
+location (2,2).
+
+``` r
+# Define the grid and paths
+path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2, 1), c(3, 1), c(3, 2), c(4, 2), c(4, 3), c(4, 4))
+path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(1, 3), c(2, 3), c(3, 3), c(3, 4), c(4, 4))
+
+# Set up plot parameters
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "X", ylab = "Y", xaxs = "i", yaxs = "i", asp = 1)
+abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
+
+# Plot the paths
+lines(path1, col = "blue", lwd = 2)
+lines(path2, col = "red", lwd = 2)
+
+# Plot detour location
+points(2, 2, col = "green", pch = 19, cex = 1)
+```
+
+<img src="man/figures/README-DetourPathsPlot-1.png" width="100%" />
+
+The total number of detour paths to a fixed destination can be computed
+with the dpaths function.
+
+``` r
+dpaths(destination = c(5,4), detour = c(3,2))
+#> [1] 66
+```
+
+Note the relation between mpaths, tpaths, and dpaths
+
+``` r
+mpaths(destination = c(5,4)) == tpaths(destination = c(5,4), target = c(3,2)) +
+                                   dpaths(destination = c(5,4), detour = c(3,2))
+#> [1] TRUE
 ```
