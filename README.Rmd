@@ -197,3 +197,36 @@ mpaths(destination = c(5,4)) == tpaths(destination = c(5,4), target = c(3,2)) +
                                    dpaths(destination = c(5,4), detour = c(3,2))
 ```
 
+
+### Detour Paths Probability Functions
+
+The streets package has a probability mass function (ddpaths), a cumulative
+probability function (pdpaths), a quantile function (qdpaths), and a random
+variable functions (rdpaths) for detour paths.  See examples below.
+
+```{r detourpaths_probabilityfuns}
+# Symmetry of the probability mass function
+ddpaths(c(5,5), c(2,3))
+ddpaths(c(5,5), c(3,2))
+
+# Normalization of the probability mass function
+  probs_dpaths <- 0
+  for (x in 0:10){
+    for (y in 0:10){
+      probs_dpaths <- probs_dpaths + ddpaths(c(10,10), c(x,y))
+    }
+  }
+
+print(probs_dpaths)
+
+# Cumulative distribution
+pdpaths(destination = c(8,8), detour = c(4,4))
+
+# Quantile function
+qdpaths(destination = c(5,5), p =.5)
+qdpaths(destination = c(5,5), p = .5, wise ="row")
+
+# Random detour location
+rdpaths(destination = c(10,10), n = 3)
+```
+
