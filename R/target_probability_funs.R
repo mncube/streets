@@ -34,18 +34,6 @@ ptpaths <- function(destination = c(i, j), target = c(ti, tj)) {
   return(cumulative_probability)
 }
 
-# ptpaths <- function(destination = c(i, j),
-#                    target = c(ti, tj)){
-#   #Get values
-#   i <- destination[[1]]
-#   j <- destination[[2]]
-#   ti <- target[[1]]
-#   tj <- target[[2]]
-#
-#   tpaths(destination = destination,
-#          target = target)/mpaths(destination = destination)
-# }
-
 
 #' Target Paths Probability Mass Function
 #'
@@ -93,14 +81,17 @@ dtpaths <- function(destination = c(i, j),
 #'
 #' A quantile function which takes a probability p and a destination (i, j) as
 #' inputs and returns the coordinates for the target location (ti, tj) where the
-#' cumulative probability is equal to or just greater than p.
+#' cumulative probability is equal to or greater than p. The target location
+#' generated has the smallest cumulative probability >= p; if multiple coordinates
+#' are tied, then the target location with closest Manhattan Distance to the origin
+#' will be selected, and if there are still ties, then the wise parameter will
+#' be used to break ties.
 #'
 #' @param destination A vector defining the destination coordinates in terms of
 #' a horizontal coordinate i and a vertical coordinate j.
 #' @param p a probability
-#' @param wise when generating quantiles, col uses j (i.e., columns) for the
-#' inner loop and i for the outer loop while row uses i for the inner loop
-#' and j for the outer loop.
+#' @param wise col selects lowest coordinates by j then i while row selects lowest
+#' by i then j
 #'
 #' @return coordinates for a target location
 #' @export
@@ -117,39 +108,42 @@ qtpaths <- function(destination = c(i, j), p, wise = "col") {
     rlang::abort(message = "p must be between 0 and 1")
   }
 
-
-  # Iterate through all possible target coordinates
-
   # Check if wise is a valid value
   if (!(wise == "col" | wise == "row")){
     rlang::abort(message ="wise must be set to 'col' or 'row'")
   }
 
-  if (wise == "col"){
-    for (ti in 0:i) {
-      for (tj in 0:j) {
-        # Check if the cumulative probability at (ti, tj) is equal to or just greater than p
-        if (ptpaths(destination = destination, target = c(ti, tj)) >= p) {
-          # Return the target coordinate (ti, tj)
-          return(c(ti,tj))
-        }
-      }
-    }
-  } else {
+  # Step 1: Get a list of all target coordinates with ptpaths >= p
+  coords <- list()
+  for (ti in 0:i) {
     for (tj in 0:j) {
-      for (ti in 0:i) {
-        # Check if the cumulative probability at (ti, tj) is equal to or just greater than p
-        if (ptpaths(destination = destination, target = c(ti, tj)) >= p) {
-          # Return the target coordinate (ti, tj)
-          return(c(ti,tj))
-        }
+      if (ptpaths(destination = destination, target = c(ti, tj)) >= p) {
+        coords <- append(coords, list(c(ti, tj)))
       }
     }
   }
 
-  # In case no suitable target coordinate is found (should not happen with valid inputs)
-    rlang::abort(message = "No suitable target coordinate found")
+  # Step 2: Filter the list to remove all target coordinates where ptpaths does not equal min(ptpaths)
+  min_ptpaths <- min(sapply(coords, function(coord) ptpaths(destination = destination, target = coord)))
+  coords <- Filter(function(coord) ptpaths(destination = destination, target = coord) == min_ptpaths, coords)
 
+  # Step 3: Filter the list to remove all target coordinates where the Manhattan Distance from the origin to the coordinate is not the min(Manhattan Distance from the origin to the coordinate)
+  manhattan_distance <- function(coord) sum(abs(coord))
+  min_distance <- min(sapply(coords, manhattan_distance))
+  coords <- Filter(function(coord) manhattan_distance(coord) == min_distance, coords)
+
+  # Step 4: If there are still ties, then use wise to select the target coordinate
+  if (length(coords) > 1) {
+    if (wise == "col") {
+      coords <- coords[order(sapply(coords, function(coord) coord[2]), sapply(coords, function(coord) coord[1]))]
+    } else {
+      coords <- coords[order(sapply(coords, function(coord) coord[1]), sapply(coords, function(coord) coord[2]))]
+    }
+  }
+
+
+  # Return the target coordinate (ti, tj)
+  return(coords[[1]])
 }
 
 
@@ -188,28 +182,3 @@ rtpaths <- function(destination = c(i, j), n = 1) {
   # Return the matrix of random target coordinates
   return(sampled_targets)
 }
-
-
-# rtpaths <- function(destination = c(i, j), n = 1) {
-#   # Get values
-#   i <- destination[[1]]
-#   j <- destination[[2]]
-#
-#   # Initialize an empty matrix to store the generated target coordinates
-#   random_targets <- matrix(0, nrow = n, ncol = 2)
-#
-#   # Generate n random target coordinates
-#   for (k in 1:n) {
-#     # Generate a random probability value between 0 and 1
-#     p <- stats::runif(1)
-#
-#     # Use the qtpaths function to get the corresponding target coordinate for the random probability value
-#     random_target <- qtpaths(destination = destination, p = p)
-#
-#     # Add the generated target coordinate to the random_targets matrix
-#     random_targets[k, ] <- random_target
-#   }
-#
-#   # Return the random_targets matrix
-#   return(random_targets)
-# }

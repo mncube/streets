@@ -74,19 +74,21 @@ pdpaths <- function(destination = c(i, j), detour = c(di, dj)) {
   return(cumulative_probability)
 }
 
-
 #' Detour Paths Quantile Function
 #'
 #' A quantile function which takes a probability p and a destination (i, j) as
 #' inputs and returns the coordinates for the detour location (di, dj) where the
-#' cumulative probability is equal to or just greater than p.
+#' cumulative probability is equal to or greater than p. The detour location
+#' generated has the smallest cumulative probability >= p; if multiple coordinates
+#' are tied, then the target location with closest Manhattan Distance to the origin
+#' will be selected, and if there are still ties, then the wise parameter will
+#' be used to break ties.
 #'
 #' @param destination A vector defining the destination coordinates in terms of
 #' a horizontal coordinate i and a vertical coordinate j.
 #' @param p a probability
-#' @param wise when generating quantiles, col uses j (i.e., columns) for the
-#' inner loop and i for the outer loop while row uses i for the inner loop
-#' and j for the outer loop.
+#' @param wise col selects lowest coordinates by j then i while row selects lowest
+#' by i then j
 #'
 #' @return coordinates for a detour location
 #' @export
@@ -103,42 +105,42 @@ qdpaths <- function(destination = c(i, j), p, wise = "col") {
     rlang::abort(message = "p must be between 0 and 1")
   }
 
-
-  # Iterate through all possible detour coordinates
-
   # Check if wise is a valid value
   if (!(wise == "col" | wise == "row")){
     rlang::abort(message ="wise must be set to 'col' or 'row'")
   }
 
-  if (wise == "col"){
-    for (di in 0:i) {
-      for (dj in 0:j) {
-        # Check if the cumulative probability at (di, dj) is equal to or just
-        #greater than p
-        if (pdpaths(destination = destination, detour = c(di, dj)) >= p) {
-          # Return the detour coordinate (di, dj)
-          return(c(di,dj))
-        }
-      }
-    }
-  } else {
+  # Step 1: Get a list of all detour coordinates with pdpaths >= p
+  coords <- list()
+  for (di in 0:i) {
     for (dj in 0:j) {
-      for (di in 0:i) {
-        # Check if the cumulative probability at (di, dj) is equal to or just
-        #greater than p
-        if (pdpaths(destination = destination, detour = c(di, dj)) >= p) {
-          # Return the detour coordinate (di, dj)
-          return(c(di,dj))
-        }
+      if (pdpaths(destination = destination, detour = c(di, dj)) >= p) {
+        coords <- append(coords, list(c(di, dj)))
       }
     }
   }
 
-  # In case no suitable detour coordinate is found (should not happen with valid
-  #inputs)
-  rlang::abort(message = "No suitable detour coordinate found")
+  # Step 2: Filter the list to remove all detour coordinates where pdpaths does not equal min(pdpaths)
+  min_pdpaths <- min(sapply(coords, function(coord) pdpaths(destination = destination, detour = coord)))
+  coords <- Filter(function(coord) pdpaths(destination = destination, detour = coord) == min_pdpaths, coords)
 
+  # Step 3: Filter the list to remove all detour coordinates where the Manhattan Distance from the origin to the coordinate is not the min(Manhattan Distance from the origin to the coordinate)
+  manhattan_distance <- function(coord) sum(abs(coord))
+  min_distance <- min(sapply(coords, manhattan_distance))
+  coords <- Filter(function(coord) manhattan_distance(coord) == min_distance, coords)
+
+  # Step 4: If there are still ties, then use wise to select the detour coordinate
+  if (length(coords) > 1) {
+    if (wise == "col") {
+      coords <- coords[order(sapply(coords, function(coord) coord[2]), sapply(coords, function(coord) coord[1]))]
+    } else {
+      coords <- coords[order(sapply(coords, function(coord) coord[1]), sapply(coords, function(coord) coord[2]))]
+    }
+  }
+
+
+  # Return the detour coordinate (di, dj)
+  return(coords[[1]])
 }
 
 

@@ -12,9 +12,8 @@ a horizontal coordinate i and a vertical coordinate j.}
 
 \item{p}{a probability}
 
-\item{wise}{when generating quantiles, col uses j (i.e., columns) for the
-inner loop and i for the outer loop while row uses i for the inner loop
-and j for the outer loop.}
+\item{wise}{col selects lowest coordinates by j then i while row selects lowest
+by i then j}
 }
 \value{
 coordinates for a target location
@@ -22,7 +21,11 @@ coordinates for a target location
 \description{
 A quantile function which takes a probability p and a destination (i, j) as
 inputs and returns the coordinates for the target location (ti, tj) where the
-cumulative probability is equal to or just greater than p.
+cumulative probability is equal to or greater than p. The target location
+generated has the smallest cumulative probability >= p; if multiple coordinates
+are tied, then the target location with closest Manhattan Distance to the origin
+will be selected, and if there are still ties, then the wise parameter will
+be used to break ties.
 }
 \examples{
 qtpaths(c(5,5), .5)

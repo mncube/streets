@@ -140,13 +140,18 @@ ptpaths(destination = c(8,8),target = c(4,4))
 
 The qtpaths function is a quantile function which takes a probability p and a 
 destination (i, j) and returns the coordinates for the target location (ti, tj) 
-where the cumulative probability is equal to or just greater than p.  The wise
-argument allows you to search for the first target location meeting the condition
-in a "row"-wise manner or a "col"umn-wise manner.  The default is "col"
+where the cumulative probability is equal to or just greater than p.  If multiple
+target locations are tied, then the target location with minimum Manhattan Distance
+from the origin wil be selected.  If there are still ties, then the target location
+will be selected based on a "col"umn-wise ordering of the coordinates (j then i)
+or based on a "row"-wise ordering of the coordinates (i then j).
+
 
 ```{r qtpaths_ex}
 qtpaths(destination = c(5,5), p =.5)
-qtpaths(destination = c(5,5), p = .5, wise ="row")
+
+# Enter the target coordinate returned by qtpaths into ptpaths to recover p
+ptpaths(destination = c(5,5), target = c(2,5))
 ```
 
 
@@ -224,7 +229,7 @@ pdpaths(destination = c(8,8), detour = c(4,4))
 
 # Quantile function
 qdpaths(destination = c(5,5), p =.5)
-qdpaths(destination = c(5,5), p = .5, wise ="row")
+pdpaths(destination = c(5,5), detour = c(5,2)) #Recover p
 
 # Random detour location
 rdpaths(destination = c(10,10), n = 3)
