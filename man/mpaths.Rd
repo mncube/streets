@@ -15,8 +15,16 @@ A number
 }
 \description{
 The mpaths function computes the number of paths with equal Manhattan Distance
-starting at the origin (0,0) and ending at (i, j).
+starting at the origin (0,0) and ending at (i, j).  For more information on
+Manhattan Distance see Chartrand et. al. (2020) Result 19.5 and Blitzstein &
+Hwang (2019) Excercises 1.9 #9
 }
 \examples{
 mpaths(c(2,2))
+}
+\references{
+Chartrand, G., Polimeni, A. D., & Zhang, P. (2020). Mathematical proofs: A
+transition to advanced mathematics (4th ed.). Pearson.
+
+Blitzstein, J., & Hwang, J. (2019). Introduction to probability (2nd ed.). CRC Press.
 }
