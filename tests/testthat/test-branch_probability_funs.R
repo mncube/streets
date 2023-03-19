@@ -36,3 +36,26 @@ test_that("pbpaths returns correct values and behaves as expected", {
   expect_error(pbpaths(c(3, 3), c(4, 3)), "Branch coordinate must be on grid")
   expect_error(pbpaths(c(3, 3), c(3, 4)), "Branch coordinate must be on grid")
 })
+
+
+test_that("qbpaths returns correct values and behaves as expected", {
+  destination <- c(3, 3)
+
+  # Test 1: Check that qbpaths returns the origin (0, 0) for p = 0
+  expect_equal(qbpaths(destination, p = 0), c(0, 0))
+
+  # Test 2: Check that qbpaths returns the destination (i, j) for p = 1
+  expect_equal(qbpaths(destination, p = 1), destination)
+
+  # Test 3: Test qbpaths against known cumulative probabilities
+  branch1 <- qbpaths(destination, p = 0.25)
+  branch2 <- qbpaths(destination, p = 0.5)
+  branch3 <- qbpaths(destination, p = 0.75)
+  expect_true(pbpaths(destination, branch1) >= 0.25)
+  expect_true(pbpaths(destination, branch2) >= 0.5)
+  expect_true(pbpaths(destination, branch3) >= 0.75)
+
+  # Test 4: Check that qbpaths raises an error for p < 0 or p > 1
+  expect_error(qbpaths(destination, p = -0.1), "p must be between 0 and 1")
+  expect_error(qbpaths(destination, p = 1.1), "p must be between 0 and 1")
+})
