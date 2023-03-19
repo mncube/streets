@@ -40,7 +40,7 @@ path1 <- rbind(c(0, 0), c(1, 0), c(1, 1), c(2, 1), c(3, 1), c(4, 1), c(4, 2), c(
 path2 <- rbind(c(0, 0), c(0, 1), c(0, 2), c(0, 3), c(1, 3), c(2, 3), c(3, 3), c(3, 4), c(4, 4))
 
 # Set up plot parameters
-plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "X", ylab = "Y", xaxs = "i", yaxs = "i", asp = 1)
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
 # Plot the paths
@@ -71,7 +71,7 @@ path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2, 1), c(2, 2), c(3, 2), c(4, 2), c(
 path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(2, 2), c(2, 3), c(3, 3), c(3, 4), c(4, 4))
 
 # Set up plot parameters
-plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "X", ylab = "Y", xaxs = "i", yaxs = "i", asp = 1)
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
 # Plot the paths
@@ -159,10 +159,10 @@ probability mass function.
 
 ``` r
 rtpaths(destination = c(10,10), n = 3)
-#>    ti tj
-#> 39  5  3
-#> 77 10  6
-#> 86  8  7
+#>     ti tj
+#> 97   8  8
+#> 120  9 10
+#> 25   2  2
 ```
 
 ## Detour Paths
@@ -178,7 +178,7 @@ path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2, 1), c(3, 1), c(3, 2), c(4, 2), c(
 path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(1, 3), c(2, 3), c(3, 3), c(3, 4), c(4, 4))
 
 # Set up plot parameters
-plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "X", ylab = "Y", xaxs = "i", yaxs = "i", asp = 1)
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
 # Plot the paths
@@ -245,9 +245,9 @@ pdpaths(destination = c(5,5), detour = c(5,2)) #Recover p
 # Random detour location
 rdpaths(destination = c(10,10), n = 3)
 #>    di dj
-#> 68  1  6
-#> 66 10  5
-#> 23  0  2
+#> 61  5  5
+#> 89  0  8
+#> 45  0  4
 ```
 
 ## Branch Paths
@@ -256,29 +256,47 @@ Branch Paths force the paths to pass to pass through a branch location;
 moreover, at a branch location, the path is allowed to step in all three
 directions exiting the location. As such, Branch Paths are similar to
 no-U-turn intersections or an out-degree-3 nodes. In the example below,
-two branch paths on a grid with destination (4,4) both pass through the
-branch location and exit with steps that do not produce the minimum
-Manhattan Distance to the destination.
+a branch path approaches a branch location from below and exits with a
+step that does not produce the minimum Manhattan Distance to the
+destination.
 
 ``` r
-# Define the grid and paths
+# Define the grid and path
 path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2,1), c(2, 2), c(1, 2), c(1, 3), c(2, 3), 
                c(3, 3), c(3, 4), c(4,4))
-path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(2, 2), c(2, 1), c(3, 1), c(3, 2), c(4, 2), c(4,3), c(4,4))
 
 # Set up plot parameters
 plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
-# Plot the paths
+# Plot the path
 lines(path1, col = "blue", lwd = 2)
-lines(path2, col = "red", lwd = 2)
 
 # Plot branch location
 points(2, 2, col = "green", pch = 19, cex = 1)
 ```
 
 <img src="man/figures/README-BranchPathsPlot-1.png" width="100%" />
+
+And in the plot below, a path enters a branch location with a rightward
+step and exits with a downward step.
+
+``` r
+# Define the grid and path
+path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(2, 2), c(2, 1), c(3, 1), c(3, 2), c(4, 2), c(4,3), c(4,4))
+
+# Set up plot parameters
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
+abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
+
+# Plot the path
+lines(path2, col = "red", lwd = 2)
+
+# Plot branch location
+points(2, 2, col = "green", pch = 19, cex = 1)
+```
+
+<img src="man/figures/README-BranchPathsPlot2-1.png" width="100%" />
 
 The total number of branch paths to a fixed destination can be computed
 with the bpaths function.
@@ -340,8 +358,8 @@ pbpaths(destination = c(5,5), branch = c(5,2)) #Recover p
 
 # Random branch locations
 rbpaths(destination = c(10,10), n = 3)
-#>     bi bj
-#> 24   1  2
-#> 53   8  4
-#> 118  7 10
+#>    bi bj
+#> 95  6  8
+#> 37  3  3
+#> 34  0  3
 ```

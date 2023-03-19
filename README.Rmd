@@ -49,7 +49,7 @@ path1 <- rbind(c(0, 0), c(1, 0), c(1, 1), c(2, 1), c(3, 1), c(4, 1), c(4, 2), c(
 path2 <- rbind(c(0, 0), c(0, 1), c(0, 2), c(0, 3), c(1, 3), c(2, 3), c(3, 3), c(3, 4), c(4, 4))
 
 # Set up plot parameters
-plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "X", ylab = "Y", xaxs = "i", yaxs = "i", asp = 1)
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
 # Plot the paths
@@ -78,7 +78,7 @@ path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2, 1), c(2, 2), c(3, 2), c(4, 2), c(
 path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(2, 2), c(2, 3), c(3, 3), c(3, 4), c(4, 4))
 
 # Set up plot parameters
-plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "X", ylab = "Y", xaxs = "i", yaxs = "i", asp = 1)
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
 # Plot the paths
@@ -175,7 +175,7 @@ path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2, 1), c(3, 1), c(3, 2), c(4, 2), c(
 path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(1, 3), c(2, 3), c(3, 3), c(3, 4), c(4, 4))
 
 # Set up plot parameters
-plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "X", ylab = "Y", xaxs = "i", yaxs = "i", asp = 1)
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
 # Plot the paths
@@ -241,22 +241,39 @@ rdpaths(destination = c(10,10), n = 3)
 Branch Paths force the paths to pass to pass through a branch location; moreover,
 at a branch location, the path is allowed to step in all three directions exiting
 the location.  As such, Branch Paths are similar to no-U-turn intersections or an
-out-degree-3 nodes.  In the example below, two branch paths on a grid
-with destination (4,4) both pass through the branch location and exit with steps
-that do not produce the minimum Manhattan Distance to the destination.
+out-degree-3 nodes.  In the example below, a branch path approaches a branch location
+from below and exits with a step that does not produce the minimum Manhattan 
+Distance to the destination.
 
 ```{r BranchPathsPlot}
-# Define the grid and paths
+# Define the grid and path
 path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2,1), c(2, 2), c(1, 2), c(1, 3), c(2, 3), 
                c(3, 3), c(3, 4), c(4,4))
+
+# Set up plot parameters
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
+abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
+
+# Plot the path
+lines(path1, col = "blue", lwd = 2)
+
+# Plot branch location
+points(2, 2, col = "green", pch = 19, cex = 1)
+```
+
+
+And in the plot below, a path enters a branch location with a rightward step
+and exits with a downward step.
+
+```{r BranchPathsPlot2}
+# Define the grid and path
 path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(2, 2), c(2, 1), c(3, 1), c(3, 2), c(4, 2), c(4,3), c(4,4))
 
 # Set up plot parameters
 plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
 abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
 
-# Plot the paths
-lines(path1, col = "blue", lwd = 2)
+# Plot the path
 lines(path2, col = "red", lwd = 2)
 
 # Plot branch location
