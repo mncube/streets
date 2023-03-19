@@ -51,7 +51,13 @@ bpaths <- function(destination = c(i,j), branch = c(bi, bj)){
     mpaths(c(bi, bj-1))*mpaths(c(i-bi, j-bj)) +
       mpaths(c(bi-1,bj))*(mpaths(c(i-bi,j-bj)) + mpaths(c(i-(bi+1), j-(bj-1))))
   }else {
+    #(mpaths approaching from beneath branch)*
+    # ((mpaths from branch to destination) +
+    #   (mpaths from coordinate located a step left then a step up from branch to destination))
     mpaths(c(bi, bj-1))*(mpaths(c(i-bi, j-bj)) + mpaths(c(i -(bi-1), j-(bj+1)))) +
+      #(mpaths approaching from left of branch)*
+      # ((mpaths from branch to destination) +
+      #   (mpaths from coordinate located a step down then a step right from branch to destination))
       mpaths(c(bi-1,bj))*(mpaths(c(i-bi,j-bj)) + mpaths(c(i-(bi+1), j-(bj-1))))
   }
 
