@@ -296,7 +296,7 @@ Note how branch paths behave along the left and bottom boundaries of the grid
 bpaths(destination = c(5,5), branch = c(0,3)) == 
   tpaths(destination = c(5,5), target = c(0,3))
 
-# Bottom Boundary (i.e., bi = 0)
+# Bottom Boundary (i.e., bj = 0)
 bpaths(destination = c(5,5), branch = c(3,0)) == 
   tpaths(destination = c(5,5), target = c(3,0))
 ```
@@ -328,7 +328,7 @@ pbpaths(destination = c(8,8), branch = c(4,4))
 
 # Quantile function
 qbpaths(destination = c(5,5), p =.5)
-pbpaths(destination = c(5,5), branch = c(5,2)) #Recover p
+pbpaths(destination = c(5,5), branch = c(3,3)) #Recover p
 
 # Random branch locations
 rbpaths(destination = c(10,10), n = 3)

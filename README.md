@@ -159,10 +159,10 @@ probability mass function.
 
 ``` r
 rtpaths(destination = c(10,10), n = 3)
-#>     ti tj
-#> 97   8  8
-#> 120  9 10
-#> 25   2  2
+#>    ti tj
+#> 62  6  5
+#> 38  4  3
+#> 12  0  1
 ```
 
 ## Detour Paths
@@ -244,10 +244,10 @@ pdpaths(destination = c(5,5), detour = c(5,2)) #Recover p
 
 # Random detour location
 rdpaths(destination = c(10,10), n = 3)
-#>    di dj
-#> 61  5  5
-#> 89  0  8
-#> 45  0  4
+#>     di dj
+#> 103  3  9
+#> 102  2  9
+#> 64   8  5
 ```
 
 ## Branch Paths
@@ -315,7 +315,7 @@ bpaths(destination = c(5,5), branch = c(0,3)) ==
   tpaths(destination = c(5,5), target = c(0,3))
 #> [1] TRUE
 
-# Bottom Boundary (i.e., bi = 0)
+# Bottom Boundary (i.e., bj = 0)
 bpaths(destination = c(5,5), branch = c(3,0)) == 
   tpaths(destination = c(5,5), target = c(3,0))
 #> [1] TRUE
@@ -353,13 +353,13 @@ pbpaths(destination = c(8,8), branch = c(4,4))
 # Quantile function
 qbpaths(destination = c(5,5), p =.5)
 #> [1] 3 3
-pbpaths(destination = c(5,5), branch = c(5,2)) #Recover p
-#> [1] 0.4848943
+pbpaths(destination = c(5,5), branch = c(3,3)) #Recover p
+#> [1] 0.5589124
 
 # Random branch locations
 rbpaths(destination = c(10,10), n = 3)
 #>    bi bj
-#> 95  6  8
-#> 37  3  3
-#> 34  0  3
+#> 73  6  6
+#> 64  8  5
+#> 39  5  3
 ```
