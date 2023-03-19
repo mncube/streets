@@ -159,10 +159,10 @@ probability mass function.
 
 ``` r
 rtpaths(destination = c(10,10), n = 3)
-#>     ti tj
-#> 121 10 10
-#> 1    0  0
-#> 87   9  7
+#>    ti tj
+#> 39  5  3
+#> 77 10  6
+#> 86  8  7
 ```
 
 ## Detour Paths
@@ -244,8 +244,104 @@ pdpaths(destination = c(5,5), detour = c(5,2)) #Recover p
 
 # Random detour location
 rdpaths(destination = c(10,10), n = 3)
-#>     di dj
-#> 45   0  4
-#> 41   7  3
-#> 114  3 10
+#>    di dj
+#> 68  1  6
+#> 66 10  5
+#> 23  0  2
+```
+
+## Branch Paths
+
+Branch Paths force the paths to pass to pass through a branch location;
+moreover, at a branch location, the path is allowed to step in all three
+directions exiting the location. As such, Branch Paths are similar to
+no-U-turn intersections or an out-degree-3 nodes. In the example below,
+two branch paths on a grid with destination (4,4) both pass through the
+branch location and exit with steps that do not produce the minimum
+Manhattan Distance to the destination.
+
+``` r
+# Define the grid and paths
+path1 <- rbind(c(0, 0), c(1, 0), c(2, 0), c(2,1), c(2, 2), c(1, 2), c(1, 3), c(2, 3), 
+               c(3, 3), c(3, 4), c(4,4))
+path2 <- rbind(c(0, 0), c(0, 1), c(1, 1), c(1, 2), c(2, 2), c(2, 1), c(3, 1), c(3, 2), c(4, 2), c(4,3), c(4,4))
+
+# Set up plot parameters
+plot(NULL, xlim = c(0, 4), ylim = c(0, 4), xlab = "i", ylab = "j", xaxs = "i", yaxs = "i", asp = 1)
+abline(h = 0:4, v = 0:4, col = "lightgray", lty = 3)
+
+# Plot the paths
+lines(path1, col = "blue", lwd = 2)
+lines(path2, col = "red", lwd = 2)
+
+# Plot branch location
+points(2, 2, col = "green", pch = 19, cex = 1)
+```
+
+<img src="man/figures/README-BranchPathsPlot-1.png" width="100%" />
+
+The total number of branch paths to a fixed destination can be computed
+with the bpaths function.
+
+``` r
+bpaths(destination = c(5,4), branch = c(3,2))
+#> [1] 100
+```
+
+Note how branch paths behave along the left and bottom boundaries of the
+grid
+
+``` r
+# Left Boundary (i.e., bi = 0)
+bpaths(destination = c(5,5), branch = c(0,3)) == 
+  tpaths(destination = c(5,5), target = c(0,3))
+#> [1] TRUE
+
+# Bottom Boundary (i.e., bi = 0)
+bpaths(destination = c(5,5), branch = c(3,0)) == 
+  tpaths(destination = c(5,5), target = c(3,0))
+#> [1] TRUE
+```
+
+### Branch Paths Probability Functions
+
+The streets package has a probability mass function (dbpaths), a
+cumulative probability function (pbpaths), a quantile function
+(qbpaths), and a random variable function (rbpaths) for branch paths.
+See examples below.
+
+``` r
+# Symmetry of the probability mass function
+dbpaths(c(5,5), c(2,3))
+#> [1] 0.0427996
+dbpaths(c(5,5), c(3,2))
+#> [1] 0.0427996
+
+# Normalization of the probability mass function
+  probs_bpaths <- 0
+  for (x in 0:10){
+    for (y in 0:10){
+      probs_bpaths <- probs_bpaths + dbpaths(c(10,10), c(x,y))
+    }
+  }
+
+print(probs_bpaths)
+#> [1] 1
+
+# Cumulative distribution
+pbpaths(destination = c(8,8), branch = c(4,4))
+#> [1] 0.4502101
+
+# Quantile function
+qbpaths(destination = c(5,5), p =.5)
+#> [1] 3 3
+pbpaths(destination = c(5,5), branch = c(5,2)) #Recover p
+#> [1] 0.4848943
+
+# Random branch locations
+rbpaths(destination = c(10,10), n = 3)
+#>     bi bj
+#> 24   1  2
+#> 53   8  4
+#> 118  7 10
 ```
