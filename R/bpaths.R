@@ -42,7 +42,9 @@ bpaths <- function(destination = c(i,j), branch = c(bi, bj)){
   #Compute branch paths
   if (bi == 0 || bj == 0){
     tpaths(destination = destination, target = branch)
-  } else if (bi == i){
+  } else if (bi == i && bj == j){
+    mpaths(destination = destination)
+  }else if (bi == i){
     mpaths(c(bi, bj-1))*(mpaths(c(i-bi, j-bj)) + mpaths(c(i -(bi-1), j-(bj+1)))) +
       mpaths(c(bi-1,bj))*mpaths(c(i-bi,j-bj))
   } else if (bj==j) {

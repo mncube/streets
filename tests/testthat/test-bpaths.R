@@ -18,4 +18,8 @@ test_that("bpaths works as expected", {
 
   #Test 6:The bj == j edge case does not throw an error
   expect_no_error(bpaths(c(5,5), c(4,5)))
+
+  #Test 7: Test that bi == i && bj == j does not throw an error and equals mpaths
+  expect_no_error(bpaths(c(5,5), c(5,5)))
+  expect_equal(bpaths(c(5,5), c(5, 5)), bpaths(c(5,5), c(5, 5)))
 })
