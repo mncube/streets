@@ -144,3 +144,40 @@ qbpaths <- function(destination = c(i, j), p, wise = "col") {
   # Return the branch coordinate (bi, bj)
   return(coords[[1]])
 }
+
+
+#' Branch Paths Random Variable Function
+#'
+#' A random variable function that generates random branch coordinates from the
+#' distribution defined by the dbpaths probability mass function.
+#'
+#' @param destination A vector defining the destination coordinates in terms of
+#' a horizontal coordinate i and a vertical coordinate j.
+#' @param n The number of branch coordinates to generate
+#'
+#' @return A matrix of branch coordinates
+#' @export
+#'
+#' @examples
+#' rbpaths(c(10,10), 2)
+rbpaths <- function(destination = c(i, j), n = 1) {
+  # Get values
+  i <- destination[[1]]
+  j <- destination[[2]]
+
+  # Create an array of all possible branch coordinates
+  all_branchs <- expand.grid(bi = 0:i, bj = 0:j)
+
+  # Compute the probabilities for each branch coordinate
+  all_probs <- apply(all_branchs, 1, function(x) dbpaths(destination, branch = x))
+
+  # Normalize the probabilities (to account for potential floating-point errors)
+  all_probs <- all_probs / sum(all_probs)
+
+  # Sample branch coordinates based on their probabilities
+  sampled_indices <- sample(1:(length(all_probs)), size = n, replace = TRUE, prob = all_probs)
+  sampled_branchs <- all_branchs[sampled_indices, ]
+
+  # Return the matrix of random branch coordinates
+  return(sampled_branchs)
+}

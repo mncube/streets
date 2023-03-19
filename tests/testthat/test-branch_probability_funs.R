@@ -59,3 +59,22 @@ test_that("qbpaths returns correct values and behaves as expected", {
   expect_error(qbpaths(destination, p = -0.1), "p must be between 0 and 1")
   expect_error(qbpaths(destination, p = 1.1), "p must be between 0 and 1")
 })
+
+
+test_that("rbpaths returns correct values and behaves as expected", {
+  # Test 1: Generate a single random branch coordinate
+  random_branch_1 <- rbpaths(c(3, 3), 1)
+  expect_equal(dim(random_branch_1), c(1, 2)) # Check if dimensions are correct
+
+  # Test 2: Generate multiple random branch coordinates
+  random_branchs_5 <- rbpaths(c(3, 3), 5)
+  expect_equal(dim(random_branchs_5), c(5, 2)) # Check if dimensions are correct
+
+  # Test 3: Generate random branch coordinates for a larger grid
+  random_branchs_large_grid <- rbpaths(c(10, 10), 5)
+  expect_equal(dim(random_branchs_large_grid), c(5, 2)) # Check if dimensions are correct
+
+  # Test 4: Generate random branch coordinates with different grid dimensions
+  random_branchs_diff_dim <- rbpaths(c(5, 8), 5)
+  expect_equal(dim(random_branchs_diff_dim), c(5, 2)) # Check if dimensions are correct
+})
