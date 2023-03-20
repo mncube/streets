@@ -22,18 +22,27 @@ The goal of streets is to provide functions for working with paths through 2D gr
 
 ## Installation
 
+You can install streets using the following command
+
+```{r}
+install.packages("streets")
+```
+
+
 You can install the development version of streets from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("mncube/streets")
+#devtools::install_github("mncube/streets")
 ```
+
 
 ## Load streets
 
 ```{r}
 library(streets)
 ```
+
 
 ## Manhattan Paths
 

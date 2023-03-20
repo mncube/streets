@@ -11,12 +11,25 @@ through 2D grids.
 
 ## Installation
 
+You can install streets using the following command
+
+``` r
+install.packages("streets")
+#> Installing package into 'C:/Users/Administrator/AppData/Local/Temp/2/RtmpiOK4TG/temp_libpathed84f557765'
+#> (as 'lib' is unspecified)
+#> Warning: package 'streets' is not available for this version of R
+#> 
+#> A version of this package for your version of R might be available elsewhere,
+#> see the ideas at
+#> https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages
+```
+
 You can install the development version of streets from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("mncube/streets")
+#devtools::install_github("mncube/streets")
 ```
 
 ## Load streets
@@ -159,10 +172,10 @@ probability mass function.
 
 ``` r
 rtpaths(destination = c(10,10), n = 3)
-#>    ti tj
-#> 62  6  5
-#> 38  4  3
-#> 12  0  1
+#>     ti tj
+#> 25   2  2
+#> 109  9  9
+#> 77  10  6
 ```
 
 ## Detour Paths
@@ -244,10 +257,10 @@ pdpaths(destination = c(5,5), detour = c(5,2)) #Recover p
 
 # Random detour location
 rdpaths(destination = c(10,10), n = 3)
-#>     di dj
-#> 103  3  9
-#> 102  2  9
-#> 64   8  5
+#>    di dj
+#> 56  0  5
+#> 75  8  6
+#> 90  1  8
 ```
 
 ## Branch Paths
@@ -359,7 +372,7 @@ pbpaths(destination = c(5,5), branch = c(3,3)) #Recover p
 # Random branch locations
 rbpaths(destination = c(10,10), n = 3)
 #>    bi bj
-#> 73  6  6
-#> 64  8  5
-#> 39  5  3
+#> 46  1  4
+#> 37  3  3
+#> 49  4  4
 ```
