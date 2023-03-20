@@ -3,7 +3,8 @@ Title: Paths on 2D Lattice Grids
 Version: 0.0.0.9000
 Authors@R: 
     person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Combinatoric and probability tools for working with paths on 2D
+    lattice grids.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
