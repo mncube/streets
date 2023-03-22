@@ -3,7 +3,7 @@ Title: Paths on 2D Lattice Grids
 Version: 1.0.1
 Authors@R: 
     person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre", "cph"))
-Description: Combinatoric and probability tools for working with paths on 2D
+Description: Combinatorial and probability tools for working with paths on 2D
     lattice grids.
 License: MIT + file LICENSE
 Encoding: UTF-8
