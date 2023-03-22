@@ -11,25 +11,12 @@ through 2D grids.
 
 ## Installation
 
-You can install streets using the following command
-
-``` r
-install.packages("streets")
-#> Installing package into 'C:/Users/Administrator/AppData/Local/Temp/2/RtmpiOK4TG/temp_libpathed84f557765'
-#> (as 'lib' is unspecified)
-#> Warning: package 'streets' is not available for this version of R
-#> 
-#> A version of this package for your version of R might be available elsewhere,
-#> see the ideas at
-#> https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages
-```
-
 You can install the development version of streets from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-#devtools::install_github("mncube/streets")
+devtools::install_github("mncube/streets")
 ```
 
 ## Load streets
@@ -172,10 +159,10 @@ probability mass function.
 
 ``` r
 rtpaths(destination = c(10,10), n = 3)
-#>     ti tj
-#> 25   2  2
-#> 109  9  9
-#> 77  10  6
+#>    ti tj
+#> 61  5  5
+#> 58  2  5
+#> 36  2  3
 ```
 
 ## Detour Paths
@@ -257,10 +244,10 @@ pdpaths(destination = c(5,5), detour = c(5,2)) #Recover p
 
 # Random detour location
 rdpaths(destination = c(10,10), n = 3)
-#>    di dj
-#> 56  0  5
-#> 75  8  6
-#> 90  1  8
+#>     di dj
+#> 12   0  1
+#> 103  3  9
+#> 87   9  7
 ```
 
 ## Branch Paths
@@ -271,7 +258,10 @@ directions exiting the location. As such, Branch Paths are similar to
 no-U-turn intersections or an out-degree-3 nodes. In the example below,
 a branch path approaches a branch location from below and exits with a
 step that does not produce the minimum Manhattan Distance to the
-destination.
+destination; please note that after this path exits the branch location,
+the path is not allowed to make a u-turn back into the branch location
+(allowing u-turns after exiting branch locations would result in an
+infinite number of paths from the origin to the destination).
 
 ``` r
 # Define the grid and path
@@ -372,7 +362,7 @@ pbpaths(destination = c(5,5), branch = c(3,3)) #Recover p
 # Random branch locations
 rbpaths(destination = c(10,10), n = 3)
 #>    bi bj
-#> 46  1  4
-#> 37  3  3
-#> 49  4  4
+#> 52  7  4
+#> 60  4  5
+#> 16  4  1
 ```

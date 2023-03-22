@@ -22,18 +22,11 @@ The goal of streets is to provide functions for working with paths through 2D gr
 
 ## Installation
 
-You can install streets using the following command
-
-```{r}
-install.packages("streets")
-```
-
-
 You can install the development version of streets from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-#devtools::install_github("mncube/streets")
+devtools::install_github("mncube/streets")
 ```
 
 
@@ -252,7 +245,10 @@ at a branch location, the path is allowed to step in all three directions exitin
 the location.  As such, Branch Paths are similar to no-U-turn intersections or an
 out-degree-3 nodes.  In the example below, a branch path approaches a branch location
 from below and exits with a step that does not produce the minimum Manhattan 
-Distance to the destination.
+Distance to the destination; please note that after this path exits the branch 
+location, the path is not allowed to make a u-turn back into the branch location
+(allowing u-turns after exiting branch locations would result in an infinite
+number of paths from the origin to the destination).
 
 ```{r BranchPathsPlot}
 # Define the grid and path
