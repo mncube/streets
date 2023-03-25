@@ -19,6 +19,12 @@ A real number in the closed interval 0 to 1
 \description{
 A cumulative distribution function for the dtpaths probability mass function
 }
+\details{
+If a path passing through a coordinate represents an impression, then ptpaths
+is the proportion of impressions obtained from the coordinates i <= ti &
+j <= tj after one traversal of each unique Manhattan Path from the origin to
+the destination.
+}
 \examples{
 ptpaths(destination = c(5,5), target = c(1,1))
 }

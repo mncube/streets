@@ -21,6 +21,11 @@ A probability mass function where the number of target paths through the
 target location specified in the target parameter is the event of interest and
 the sum of target paths across all coordinates on the grid is the sample space.
 }
+\details{
+If a path passing through a coordinate represents an impression, then dtpaths
+is the proportion of impressions obtained from the target location after a one
+traversal of each unique Manhattan Path from the origin to the destination.
+}
 \examples{
 dtpaths(c(2,2), c(2,1))
 }

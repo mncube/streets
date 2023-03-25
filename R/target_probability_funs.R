@@ -1,45 +1,12 @@
-#' Target Paths Cumulative Distribution Function
-#'
-#' A cumulative distribution function for the dtpaths probability mass function
-#'
-#' @param destination A vector defining the destination coordinates in terms of
-#' a horizontal coordinate i and a vertical coordinate j.
-#' @param target A vector defining the target coordinates in terms of a
-#' horizontal coordinate ti and a vertical coordinate tj.
-#'
-#' @return A real number in the closed interval 0 to 1
-#' @export
-#'
-#' @examples
-#' ptpaths(destination = c(5,5), target = c(1,1))
-ptpaths <- function(destination = c(i, j), target = c(ti, tj)) {
-  # Get values
-  i <- destination[[1]]
-  j <- destination[[2]]
-  ti <- target[[1]]
-  tj <- target[[2]]
-
-  # Initialize the cumulative probability
-  cumulative_probability <- 0
-
-  # Iterate through all possible target coordinates up to and including (ti, tj)
-  for (x in 0:ti) {
-    for (y in 0:tj) {
-      # Add the probability of each target coordinate to the cumulative probability
-      cumulative_probability <- cumulative_probability + dtpaths(destination = destination, target = c(x, y))
-    }
-  }
-
-  # Return the cumulative probability
-  return(cumulative_probability)
-}
-
-
 #' Target Paths Probability Mass Function
 #'
 #' A probability mass function where the number of target paths through the
 #' target location specified in the target parameter is the event of interest and
 #' the sum of target paths across all coordinates on the grid is the sample space.
+#'
+#' If a path passing through a coordinate represents an impression, then dtpaths
+#' is the proportion of impressions obtained from the target location after a one
+#' traversal of each unique Manhattan Path from the origin to the destination.
 #'
 #' @param destination A vector defining the destination coordinates in terms of
 #' a horizontal coordinate i and a vertical coordinate j.
@@ -76,6 +43,47 @@ dtpaths <- function(destination = c(i, j),
 
 }
 
+
+#' Target Paths Cumulative Distribution Function
+#'
+#' A cumulative distribution function for the dtpaths probability mass function
+#'
+#' If a path passing through a coordinate represents an impression, then ptpaths
+#' is the proportion of impressions obtained from the coordinates i <= ti &
+#' j <= tj after one traversal of each unique Manhattan Path from the origin to
+#' the destination.
+#'
+#' @param destination A vector defining the destination coordinates in terms of
+#' a horizontal coordinate i and a vertical coordinate j.
+#' @param target A vector defining the target coordinates in terms of a
+#' horizontal coordinate ti and a vertical coordinate tj.
+#'
+#' @return A real number in the closed interval 0 to 1
+#' @export
+#'
+#' @examples
+#' ptpaths(destination = c(5,5), target = c(1,1))
+ptpaths <- function(destination = c(i, j), target = c(ti, tj)) {
+  # Get values
+  i <- destination[[1]]
+  j <- destination[[2]]
+  ti <- target[[1]]
+  tj <- target[[2]]
+
+  # Initialize the cumulative probability
+  cumulative_probability <- 0
+
+  # Iterate through all possible target coordinates up to and including (ti, tj)
+  for (x in 0:ti) {
+    for (y in 0:tj) {
+      # Add the probability of each target coordinate to the cumulative probability
+      cumulative_probability <- cumulative_probability + dtpaths(destination = destination, target = c(x, y))
+    }
+  }
+
+  # Return the cumulative probability
+  return(cumulative_probability)
+}
 
 #' Target Paths Quantile Function
 #'
