@@ -3,8 +3,15 @@ Title: Paths on 2D Lattice Grids
 Version: 1.0.1
 Authors@R: 
     person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre", "cph"))
-Description: Combinatorial and probability tools for working with paths on 2D
-    lattice grids.
+Description: Let a billboard-way be a road transport system where streets are 
+    arranged as a 2D lattice grid, with cars assigned a path through the grid, 
+    starting at the origin and ending at the destination. Let a standard path 
+    through a billboard-way follow a Manhattan Path, as described in Chartrand, 
+    Polimeni, and Zhang (2017, ISBN: 9780134746753). Each intersection in a 
+    billboard-way features one billboard. The streets package offers combinatorial 
+    tools for calculating paths on 2D grids, using methods outlined in Blitzstein 
+    and Hwang (2019, ISBN: 9781138369917). Additionally, the streets package 
+    provides probability functions for billboard impressions in a billboard-way.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
